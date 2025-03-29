@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>TETRIS</title>
+    <link rel="stylesheet" href="./main.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div style="float: left">
+      <input type="button" id="startBtn" value="START" />
+      <table id="gamebox" class="gamebox" tabindex="0"></table>
+      <img id="winImg" src="./images/win.png" class="matchResult" />
+      <img id="loseImg" src="./images/game_over.png" class="matchResult" />
+    </div>
+    <div style="float: left; margin-left: 20px">
+      <br /><br /><br />
+      <label id="" class="textValue">현재 점수 : </label>
+      <label id="score" class="textValue">0</label><br /><br />
+      <div>
+        <table id="nextBlock1" class="nextBlock"></table>
+        <br />
+        <table id="nextBlock2" class="nextBlock"></table>
+        <br />
+        <input
+          type="button"
+          id="guideMode"
+          class="settingBtn"
+          value="가이드 ON"
+        /><br /><br />
+        <input
+          type="button"
+          id="rotateMode"
+          class="settingBtn"
+          value="시계 방향"
+        /><br /><br />
+        <input
+          type="button"
+          id="gameMode"
+          class="settingBtn"
+          value="PAUSE"
+        /><br /><br />
+        <input
+          type="button"
+          id="autoPlayMode"
+          class="settingBtn"
+          value="MANUAL"
+        /><br /><br />
+
+        <input
+          type="range"
+          min="50"
+          max="2000"
+          value="1000"
+          class="slider"
+          id="timerInterval"
+        /><br />
+        <label>블럭 드랍 시간 : </label>
+        <label id="currentTimeInterval">1s</label><br /><br />
+
+        <input
+          type="range"
+          min="50"
+          max="1000"
+          value="500"
+          class="slider"
+          id="autoTimerInterval"
+        /><br />
+        <label>Auto 모드 시간 : </label>
+        <label id="currentAutoTimeInterval">0.5s</label>
+      </div>
+    </div>
+    <div style="float: left; margin-left: 150px">
+      <!-- <table id="gameboxPC" class="gamebox"></table> -->
+    </div>
+
+    <script src="./jquery-3.3.1.js"></script>
+    <script src="./blockAction.js"></script>
+    <script src="./TetrisModule.js"></script>
+  </body>
+</html>

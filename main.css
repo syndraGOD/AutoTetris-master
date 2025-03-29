@@ -1,0 +1,126 @@
+#startBtn{
+	position: relative;
+	z-index: 10;
+	top: 400px;
+	left: 140px;
+	background-color: black;
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.settingBtn{
+	width: 150px;
+	float: none;
+	background-color: black;
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+#gamebox{
+	position: relative;
+	z-index: 1;
+	width: 400px;
+	height: 800px;
+	border: 1px solid rgba(0,0,0,0.3);
+	border-collapse: separate;
+	border-spacing: 0px;
+}
+
+#gamebox tr, td{
+	border: 1px solid rgba(0,0,0,0.3);
+}
+
+#gameboxPC{
+	margin-top: 50px;
+	position: relative;
+	z-index: 1;
+	width: 400px;
+	height: 800px;
+	border: 1px solid rgba(0,0,0,0.3);
+	border-collapse: separate;
+	border-spacing: 0px;
+}
+
+#gameboxPC tr, td{
+	border: 1px solid rgba(0,0,0,0.3);
+}
+.nextBlock{
+	width: 150px;
+	height: 150px;
+	border-collapse: collapse;
+	border: 1px solid rgba(0,0,0,0.3);
+}
+
+.originBlock{
+	border: 1px solid rgba(0,0,0,0.3);
+	outline: rgba(0,0,0,0.3) solid 0px;
+}
+
+.guideBlock{
+	border: 1px solid red;
+	outline: red solid 1.5px;
+}
+
+#score{
+}
+
+.textValue{
+	font-family: "Nanum Gothic", sans-serif;
+    font-size: 23px;	
+    font-weight: 700;
+}
+
+
+
+.slider {
+  -webkit-appearance: none;
+  width: 150px;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: black;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: black;
+  cursor: pointer;
+}
+
+.matchResult {
+	width: 256px;
+	height: 256px;
+	z-index: 30;
+	position: fixed;
+	top: 30%;
+	left: 25%;
+	display: none;
+}
