@@ -70,7 +70,7 @@ var blockOrderDataPC = [];
 var timer, autoTimer, comTimer, comAutoTimer;
 var autoPlayMode = false;
 
-var autoDropTime = 500;
+var autoDropTime = 1000;
 var autoPlayTime = 1000;
 
 var userGameBoxID = "#gamebox";
@@ -150,3 +150,37 @@ function createBlockOrderData() {
   nextBlockType.push(blockOrderData.shift());
   nextBlockType.push(blockOrderData.shift());
 }
+
+const pointAdd = (amount) => {
+  var point = Number($("#score").text());
+  $("#score").text(point + amount * 10);
+};
+
+const gameover = () => {
+  gameMode = false;
+  // $("label#score").text(0);
+  $("#startBtn").css("visibility", "visible");
+  $("#winImg").css("display", "block");
+  $(userGameBoxID).css("opacity", "1.0");
+};
+
+const test = (y, x) => {
+  $(userGameBoxID + " tr")
+    .eq(y)
+    .find("td")
+    .eq(x)
+    .css("backgroundColor", "black");
+};
+
+$("#gameMode").on("click", () => {
+  gameMode = !gameMode;
+  currentBlock.timer();
+});
+$("#timerInterval").on("input change", () => {
+  autoDropTime = $("#timerInterval").val();
+  $("#currentTimeInterval").text(`${autoDropTime / 1000}s`);
+});
+$("#mapSize").on("input change", () => {
+  size = 100 - $("#mapSize").val();
+  $("#currentmapSize").text(`${$("#mapSize").val()}`);
+});

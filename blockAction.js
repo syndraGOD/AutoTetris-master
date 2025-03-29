@@ -64,14 +64,6 @@ class Block {
     // $(gameBoxID).find("tr").eq(i).find("td").eq(j);
   }
   delete() {
-    // this.blocks.map(([y, x]) => {
-    //   $(this.gameBoxID)
-    //     .find("tr")
-    //     .eq(this.oldAbsolutePosition[0] + y)
-    //     .find("td")
-    //     .eq(this.oldAbsolutePosition[1] + x)
-    //     .css("backgroundColor", "#FFFFFF");
-    // });
     this.oldAbsolutePosition.map(([y, x]) => {
       $(this.gameBoxID)
         .find("tr")
@@ -84,23 +76,38 @@ class Block {
   move(keyCode) {
     //left
     if (keyCode === "37") {
-      if (this.position[1] <= 0) return false;
-      if (!this.isCanMove(1)) return false;
-      // return false;
-      this.position[1] -= 1;
-      //right
+      const moveArr = this.blocks.map(([y, x]) => [y, x - 1]);
+      if (
+        bgColorTransaction(
+          this.absolutePosition(this.blocks),
+          this.absolutePosition(moveArr)
+        )
+      ) {
+        this.position[1] -= 1;
+      }
     } else if (keyCode === "39") {
-      const maxZ =
-        Math.max(...this.blocks.map(([y, x]) => x)) +
-        1 /*x좌표는 0부터시작, col은 1부터시작*/ +
-        this.position[1];
-      if (maxZ >= Col) return false;
-      if (!this.isCanMove(2)) return false;
-      this.position[1] += 1;
+      const moveArr = this.blocks.map(([y, x]) => [y, x + 1]);
+      if (
+        bgColorTransaction(
+          this.absolutePosition(this.blocks),
+          this.absolutePosition(moveArr)
+        )
+      ) {
+        this.position[1] += 1;
+      }
       //down
     } else if (keyCode === "40") {
-      if (!this.isCanMove(0)) return false;
-      this.position[0] += 1;
+      const moveArr = this.blocks.map(([y, x]) => [y + 1, x]);
+      if (
+        bgColorTransaction(
+          this.absolutePosition(this.blocks),
+          this.absolutePosition(moveArr)
+        )
+      ) {
+        this.position[0] += 1;
+      } else {
+        return false;
+      }
       //up , rotate
     } else if (keyCode === "38") {
       // this.blocks
@@ -115,7 +122,7 @@ class Block {
           // return [x, -y];
           case 3:
           case 4:
-            return [x, y];
+            return [-x + 2, y];
           case 5:
             return [x + 1, y - 1];
           // return [x, y];
@@ -123,20 +130,21 @@ class Block {
         // return [x + 1, -y + 1];
       });
       //일괄검증 위해 추가한 코드
-      var testTemp1 = this.blocks.map(([y, x]) => [
-        y + this.position[0],
-        x + this.position[1],
-      ]);
-      var testTemp2 = result.map(([y, x]) => [
-        y + this.position[0],
-        x + this.position[1],
-      ]);
-      if (bgColorTransaction(testTemp1, testTemp2)) {
+      if (
+        bgColorTransaction(
+          this.absolutePosition(this.blocks),
+          this.absolutePosition(result)
+        )
+      ) {
         this.blocks = result;
-      } else {
-        console.log("다른 블럭과 충돌합니다");
-        console.log(bgColorTransaction(testTemp1, testTemp2));
       }
+      //   var testTemp2 = result.map(([y, x]) => [
+      //     y + this.position[0],
+      //     x + this.position[1],
+      //   ]);
+      //   if (bgColorTransaction(testTemp1, testTemp2)) {
+      //     this.blocks = result;
+      //   }
       // this.blocks = result;
     } else if (keyCode === "90") {
       this.drop();
@@ -149,69 +157,72 @@ class Block {
     // return ;
     return true;
   }
+  absolutePosition = (arr) => {
+    return arr.map(([y, x]) => [y + this.position[0], x + this.position[1]]);
+  };
   drop() {
     while (this.move("40")) {}
   }
-  isCanMove(direction) {
-    // 0 = down, 1 = left, 2 = right
-    if (direction === 0) {
-      const xOfLowY = {};
-      // x값에 대한 가장 낮은 위치에 있는 블럭들을 찾음
-      this.blocks.map(([y, x]) =>
-        xOfLowY[x] === undefined || xOfLowY[x] < y ? (xOfLowY[x] = y) : null
-      );
-      const b = Object.entries(xOfLowY).every(([x, y]) => {
-        const result =
-          y + this.position[0] + 1 < Row && // 경기장 밖으로 넘어갔거나
-          $(this.gameBoxID)
-            .find("tr")
-            .eq(y + this.position[0] + 1)
-            .find("td")
-            .eq(Number(x) + this.position[1])
-            .css("backgroundColor") === "rgba(0, 0, 0, 0)"; // 밑에 블럭이 안비어있으면 false반환
-        return result;
-      });
-      return b;
-      // console.log("xoflowy : ", xOfLowY);
-      // console.log("finish_result", b);
-    } else if (direction === 1) {
-      const xOfLowY = {};
-      // y값에 대한 가장 왼쪽 위치에 있는 블럭들을 찾음
-      this.blocks.map(([y, x]) => {
-        xOfLowY[y] === undefined || xOfLowY[y] > x ? (xOfLowY[y] = x) : null;
-      });
-      // console.log("히히 작동");
-      // console.log(xOfLowY);
+  //   isCanMove(direction) {
+  //     // 0 = down, 1 = left, 2 = right
+  //     if (direction === 0) {
+  //       const xOfLowY = {};
+  //       // x값에 대한 가장 낮은 위치에 있는 블럭들을 찾음
+  //       this.blocks.map(([y, x]) =>
+  //         xOfLowY[x] === undefined || xOfLowY[x] < y ? (xOfLowY[x] = y) : null
+  //       );
+  //       const b = Object.entries(xOfLowY).every(([x, y]) => {
+  //         const result =
+  //           y + this.position[0] + 1 < Row && // 경기장 밖으로 넘어갔거나
+  //           $(this.gameBoxID)
+  //             .find("tr")
+  //             .eq(y + this.position[0] + 1)
+  //             .find("td")
+  //             .eq(Number(x) + this.position[1])
+  //             .css("backgroundColor") === "rgba(0, 0, 0, 0)"; // 밑에 블럭이 안비어있으면 false반환
+  //         return result;
+  //       });
+  //       return b;
+  //       // console.log("xoflowy : ", xOfLowY);
+  //       // console.log("finish_result", b);
+  //     } else if (direction === 1) {
+  //       const xOfLowY = {};
+  //       // y값에 대한 가장 왼쪽 위치에 있는 블럭들을 찾음
+  //       this.blocks.map(([y, x]) => {
+  //         xOfLowY[y] === undefined || xOfLowY[y] > x ? (xOfLowY[y] = x) : null;
+  //       });
+  //       // console.log("히히 작동");
+  //       // console.log(xOfLowY);
 
-      return Object.entries(xOfLowY).every(([y, x]) => {
-        return (
-          $(this.gameBoxID)
-            .find("tr")
-            .eq(Number(y) + this.position[0])
-            .find("td")
-            .eq(Number(x) + this.position[1] - 1)
-            .css("backgroundColor") === "rgba(0, 0, 0, 0)"
-        ); // 밑에 블럭이 안비어있으면 false반환
-      });
-    } else if (direction === 2) {
-      const xOfLowY = {};
-      // y값에 대한 가장 오른쪽 위치에 있는 블럭들을 찾음
-      this.blocks.map(([y, x]) => {
-        xOfLowY[y] === undefined || xOfLowY[y] < x ? (xOfLowY[y] = x) : null;
-      });
+  //       return Object.entries(xOfLowY).every(([y, x]) => {
+  //         return (
+  //           $(this.gameBoxID)
+  //             .find("tr")
+  //             .eq(Number(y) + this.position[0])
+  //             .find("td")
+  //             .eq(Number(x) + this.position[1] - 1)
+  //             .css("backgroundColor") === "rgba(0, 0, 0, 0)"
+  //         ); // 밑에 블럭이 안비어있으면 false반환
+  //       });
+  //     } else if (direction === 2) {
+  //       const xOfLowY = {};
+  //       // y값에 대한 가장 오른쪽 위치에 있는 블럭들을 찾음
+  //       this.blocks.map(([y, x]) => {
+  //         xOfLowY[y] === undefined || xOfLowY[y] < x ? (xOfLowY[y] = x) : null;
+  //       });
 
-      return Object.entries(xOfLowY).every(([y, x]) => {
-        return (
-          $(this.gameBoxID)
-            .find("tr")
-            .eq(Number(y) + this.position[0])
-            .find("td")
-            .eq(Number(x) + this.position[1] + 1)
-            .css("backgroundColor") === "rgba(0, 0, 0, 0)"
-        ); // 밑에 블럭이 안비어있으면 false반환
-      });
-    }
-  }
+  //       return Object.entries(xOfLowY).every(([y, x]) => {
+  //         return (
+  //           $(this.gameBoxID)
+  //             .find("tr")
+  //             .eq(Number(y) + this.position[0])
+  //             .find("td")
+  //             .eq(Number(x) + this.position[1] + 1)
+  //             .css("backgroundColor") === "rgba(0, 0, 0, 0)"
+  //         ); // 밑에 블럭이 안비어있으면 false반환
+  //       });
+  //     }
+  //   }
   //  isFull(){
 
   //  }
@@ -225,7 +236,6 @@ const bgColorTransaction = (beforeArr, AfterArr) => {
   let difference = AfterArr.filter((x) => !beforeArr.includes(x));
   difference = difference.map((x) => JSON.parse(x));
 
-  console.log(beforeArr, AfterArr, difference);
   return difference.every(([y, x]) => {
     if (
       $(userGameBoxID)
@@ -287,29 +297,3 @@ const nextBlockDraw = () => {
   });
 };
 // var blockCount = 0;
-
-const pointAdd = (amount) => {
-  var point = Number($("#score").text());
-  $("#score").text(point + amount * 10);
-};
-
-const gameover = () => {
-  gameMode = false;
-  // $("label#score").text(0);
-  $("#startBtn").css("visibility", "visible");
-  $("#winImg").css("display", "block");
-  $(userGameBoxID).css("opacity", "1.0");
-};
-
-$("#gameMode").on("click", () => {
-  gameMode = !gameMode;
-  currentBlock.timer();
-});
-
-const test = (y, x) => {
-  $(userGameBoxID + " tr")
-    .eq(y)
-    .find("td")
-    .eq(x)
-    .css("backgroundColor", "black");
-};

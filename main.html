@@ -86,41 +86,43 @@
           class="settingBtn"
           value="시계 방향"
         /><br /><br /> -->
-        <input
-          type="button"
-          id="gameMode"
-          class="settingBtn"
-          value="PAUSE"
-        /><br /><br />
         <!-- <input
           type="button"
           id="autoPlayMode"
           class="settingBtn"
           value="MANUAL"
-        /><br /><br />
+        /><br /><br /> -->
 
         <input
           type="range"
-          min="50"
+          min="10"
           max="2000"
           value="1000"
           class="slider"
           id="timerInterval"
         /><br />
         <label>블럭 드랍 시간 : </label>
-        <label id="currentTimeInterval">1s</label><br /><br />
+        <label id="currentTimeInterval">1.000s</label><br /><br />
 
         <input
           type="range"
-          min="50"
-          max="1000"
-          value="500"
+          min="60"
+          max="90"
+          value="60"
           class="slider"
-          id="autoTimerInterval"
+          id="mapSize"
         /><br />
-        <label>Auto 모드 시간 : </label>
-        <label id="currentAutoTimeInterval">0.5s</label> -->
+        <label>맵 크기 : </label>
+        <label id="currentmapSize">60</label>
+        <br /><br /><br /><br /><br /><br />
+        <input
+          type="button"
+          id="gameMode"
+          class="settingBtn"
+          value="PAUSE"
+        /><br /><br />
       </div>
+      
     </div>
     <div style="float: left; margin-left: 150px">
       <!-- <table id="gameboxPC" class="gamebox"></table> -->
