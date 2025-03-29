@@ -11,22 +11,70 @@
   </head>
 
   <body>
+    
     <div style="float: left">
       <input type="button" id="startBtn" value="START" />
       <table id="gamebox" class="gamebox" tabindex="0"></table>
       <img id="winImg" src="./images/win.png" class="matchResult" />
       <img id="loseImg" src="./images/game_over.png" class="matchResult" />
+
+      <div id="deadLine"></div>
     </div>
     <div style="float: left; margin-left: 20px">
       <br /><br /><br />
       <label id="" class="textValue">현재 점수 : </label>
       <label id="score" class="textValue">0</label><br /><br />
-      <div>
-        <table id="nextBlock1" class="nextBlock"></table>
+      <br />
+      <br />
+        <div id="" class="textValue" style="width: 100%; text-align: center">
+          Next Block
+        </div>
+        <br/>
+        <table id="nextBlock1" class="nextBlock">
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+
+
         <br />
-        <table id="nextBlock2" class="nextBlock"></table>
         <br />
-        <input
+        <br />
+        <!-- <table id="nextBlock2" class="nextBlock"></table> -->
+        <br />
+        <!-- <input
           type="button"
           id="guideMode"
           class="settingBtn"
@@ -37,14 +85,14 @@
           id="rotateMode"
           class="settingBtn"
           value="시계 방향"
-        /><br /><br />
+        /><br /><br /> -->
         <input
           type="button"
           id="gameMode"
           class="settingBtn"
           value="PAUSE"
         /><br /><br />
-        <input
+        <!-- <input
           type="button"
           id="autoPlayMode"
           class="settingBtn"
@@ -71,7 +119,7 @@
           id="autoTimerInterval"
         /><br />
         <label>Auto 모드 시간 : </label>
-        <label id="currentAutoTimeInterval">0.5s</label>
+        <label id="currentAutoTimeInterval">0.5s</label> -->
       </div>
     </div>
     <div style="float: left; margin-left: 150px">
